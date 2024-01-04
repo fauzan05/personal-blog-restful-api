@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class AddressCreateRequest extends FormRequest
+class PostUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,17 +23,13 @@ class AddressCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => ['required', 'integer', 'max:50'],
-            'street' => ['required', 'string', 'max:100'],
-            'village' => ['required', 'string', 'max:50'],
-            'subdistrict' => ['required', 'string', 'max:50'],
-            'city' => ['required', 'string', 'max:50'],
-            'province' => ['required', 'string', 'max:50'],
-            'country' => ['required', 'string', 'max:50'],
-            'postal_code' => ['required', 'string', 'max:10'],
+            'category_id' => ['nullable', 'integer'],
+            'tag_id' => ['nullable', 'array'],
+            'title' => ['nullable', 'string', 'max:100'],
+            'content' => ['nullable', 'string'],
+            'location' => ['nullable', 'string']
         ];
     }
-
     protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
     {
         throw new HttpResponseException(response([

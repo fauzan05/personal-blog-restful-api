@@ -23,7 +23,7 @@ class AddressUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => ['required', 'string', 'max:50'],
+            'user_id' => ['required', 'integer', 'max:50'],
             'street' => ['nullable', 'string', 'max:100'],
             'village' => ['nullable', 'string', 'max:50'],
             'subdistrict' => ['nullable', 'string', 'max:50'],

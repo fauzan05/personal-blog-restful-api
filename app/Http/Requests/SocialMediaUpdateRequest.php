@@ -23,7 +23,7 @@ class SocialMediaUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => ['required', 'string', 'max:50'],
+            'user_id' => ['required', 'integer', 'max:50'],
             'account_name' => ['nullable', 'string', 'max:50'],
             'account_link' => ['nullable', 'string', 'max:100'],
             'type' => ['nullable', 'string', 'max:50'],

@@ -2,7 +2,10 @@
 
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\SocialMediaController;
+use App\Http\Controllers\TagController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -41,4 +44,22 @@ Route::middleware('auth:api')->group(function () {
     Route::patch('/social-media/{idSocialMedia}', [SocialMediaController::class, 'update'])->middleware('user.id.exist')->where('idSocialMedia', '[0-9]+');
     Route::get('/social-media', [SocialMediaController::class, 'get'])->middleware('user.id.exist');
     Route::delete('/social-media/{idSocialMedia}', [SocialMediaController::class, 'delete'])->middleware(['user.id.exist', 'social.media.is.exist'])->where('isSocialMedia', '[0-9]+');
-}); 
+    // Tag
+    Route::post('/tag', [TagController::class, 'create'])->middleware('tag.exist');
+    Route::patch('/tag/{idTag}', [TagController::class, 'update'])->middleware('tag.exist')->where('idTag', '[0-9]+');
+    Route::get('/tag', [TagController::class, 'show']);
+    Route::delete('/tag/{idTag}', [TagController::class, 'delete'])->middleware('tag.exist')->where('idTag', '[0-9]+');
+    Route::delete('/tag', [TagController::class, 'destroy'])->middleware('tag.exist');
+    // Category
+    Route::post('/category', [CategoryController::class, 'create'])->middleware('category.exist');
+    Route::patch('/category/{idCategory}', [CategoryController::class, 'update'])->middleware('category.exist')->where('idCategory', '[0-9]+');
+    Route::get('/category', [CategoryController::class, 'show']);
+    Route::delete('/category/{idCategory}', [CategoryController::class, 'delete'])->middleware('category.exist')->where('idCategory', '[0-9]+');
+    Route::delete('/category', [CategoryController::class, 'destroy']);
+    // Post
+    Route::post('/post', [PostController::class, 'create']);
+    Route::patch('/post/{idPost}', [PostController::class, 'update'])->where('idPost', '[0-9]+');
+    Route::get('/post', [PostController::class, 'show']);
+    Route::delete('/post/{idPost}', [PostController::class, 'delete'])->where('idPost', '[0-9]+');
+    Route::delete('/post', [PostController::class, 'destroy']);
+});
