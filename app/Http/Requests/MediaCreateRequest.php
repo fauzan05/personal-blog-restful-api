@@ -4,8 +4,9 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rules\File;
 
-class UserGuestRegisterRequest extends FormRequest
+class MediaCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +24,12 @@ class UserGuestRegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username' => ['required', 'string'],
-            'email' => ['required', 'string']
+            'post_id' => ['required', 'integer'],
+            'image_file' => ['required', 
+                            File::image()
+                                ->min(20) // 200 kb
+                                ->max(100 * 200) // 20 mb
+                            ]
         ];
     }
     protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)

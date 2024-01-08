@@ -14,6 +14,7 @@ class PostResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $path = strtolower(str_replace(" ", "-", $this->title));
         return [
             'id' => $this->id,
             'author' => $this->user,
@@ -22,6 +23,8 @@ class PostResource extends JsonResource
             'content' => $this->content,
             'location' => $this->location,
             'tag' => $this->tags,
+            'path' => $path,
+            'media' => $this->media,
             'created_at' => $this->created_at->format('l, j F Y H:i:s'),
             'updated_at' => $this->updated_at->format('l, j F Y H:i:s')
         ];

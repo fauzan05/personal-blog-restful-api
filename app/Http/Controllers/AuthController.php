@@ -46,16 +46,17 @@ class AuthController extends Controller
     public function registerGuest(UserGuestRegisterRequest $request)
     {
         $inputs = $request->validated();
-        $guest = User::where('username', $inputs['username'])->first();
-        if(isset($guest) && $guest->email == $inputs['email'])
+        $username = User::where('username', $inputs['username'])->first();
+        $email = User::where('email', $inputs['email'])->first();
+        if(isset($username) && $username->email == $inputs['email'] || isset($email) && $email->username == $inputs['username'])
         {
             return response()->json(
                 [
                     'status' => 'success',
                     'code' => 200,
-                    'message' => 'The guest user has been already created',
+                    'message' => 'The guest user has been already exist',
                     'api_version' => 'v1',
-                    'data' => $guest,
+                    'data' => !$username ? $email : $username,
                     'error' => null,
                 ],
             )->setStatusCode(200);

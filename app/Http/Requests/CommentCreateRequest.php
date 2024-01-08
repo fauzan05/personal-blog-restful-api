@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class CommentCreateRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class CommentCreateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,23 @@ class CommentCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'post_id' => ['required', 'integer'],
+            'user_id' => ['required', 'integer'],
+            'parent_id' => ['nullable', 'integer'],
+            'content' => ['required', 'string']
         ];
+    }
+    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    {
+        throw new HttpResponseException(response([
+            'status' => 'failed',
+            'code' => 400,
+            'message' => 'Validation Error',
+            'api_version' => 'v1',
+            'data' => null,
+            'error' => [
+                'error_message' => $validator->getMessageBag()
+            ]       
+        ], 400));
     }
 }

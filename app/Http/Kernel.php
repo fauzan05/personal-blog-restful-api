@@ -6,6 +6,7 @@ use App\Http\Middleware\AddressIsExist;
 use App\Http\Middleware\CategoryIsExist;
 use App\Http\Middleware\EmailIsExist;
 use App\Http\Middleware\OldPasswordValidation;
+use App\Http\Middleware\PostIsExist;
 use App\Http\Middleware\SocialMediaIsExist;
 use App\Http\Middleware\TagIsExist;
 use App\Http\Middleware\UserIdIsExist;
@@ -83,6 +84,7 @@ class Kernel extends HttpKernel
         'user.id.unique' => UserIdIsUnique::class,
         'social.media.is.exist' => SocialMediaIsExist::class,
         'tag.exist' => TagIsExist::class,
-        'category.exist' => CategoryIsExist::class
+        'category.exist' => CategoryIsExist::class,
+        'post.exist' => PostIsExist::class
     ];
 }
